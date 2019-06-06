@@ -34,7 +34,7 @@ Write-host -f red $_.ProcessName $_.WS}`
 else{ write-host -f green $_.ProcessName $_.WS}}
 
 #Подсчитать размер занимаемый файлами в папке C:\windows (и во всех подпапках) за исключением файлов *.tmp
-#Ещё не сделал
+$FolderSizeWin =  (Get-ChildItem -Force  c:\Windows\ -Recurse -ErrorAction SilentlyContinue | measure Length -sum)/ 1Mb
 
 #Сохранить в CSV-файле информацию о записях одной ветви реестра HKLM:\SOFTWARE\Microsoft.
 Get-ChildItem HKLM:\SOFTWARE\Microsoft | Export-CSV C:\reestr.csv
