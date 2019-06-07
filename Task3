@@ -30,3 +30,17 @@ $FolderSizeWin = Get-ChildItem -Force  C:\windows\ -Recurse -ErrorAction Silentl
 $ExcludeSizeFiles = Get-ChildItem -Force  C:\windows\*.$ExcludeFiles -Recurse -ErrorAction SilentlyContinue | Measure-Object Length -sum
 $FolderSizeWin.sum - $ExcludeSizeFiles.sum
 
+#Создать один скрипт, объединив 3 задачи:
+#Сохранить в CSV-файле информацию обо всех обновлениях безопасности ОС.
+#Сохранить в XML-файле информацию о записях одной ветви реестра HKLM:\SOFTWARE\Microsoft.
+#Загрузить данные из полученного в п.1.5.1 или п.1.5.2 файла и вывести в виде списка  разным разными цветами (ещё не сделал этот пункт)
+
+[CmdletBinding()]
+Param (
+    [parameter(Mandatory=$true, HelpMessage="Enter path to directory")]
+    [string]$PathToDirectory,
+[   parameter(Mandatory=$false, HelpMessage="Enter path to directory")]
+    [string]$Registry = "HKLM:\SOFTWARE\Microsoft\.NETFramework\"
+)
+Get-HotFix | Export-Csv -Path $PathToDirectory/hotfix.csv
+Get-ChildItem -Recurse $Registry | Export-Clixml $PathToDirectory/registry.xml
