@@ -26,7 +26,7 @@ Param (
     [parameter(Mandatory=$true, HelpMessage="What files to exclude?")]
       [string]$ExcludeFiles
 )
-$FolderSizeWin = Get-ChildItem -Force  c:\Windows\ -Recurse -ErrorAction SilentlyContinue | measure Length -sum
-$FileSizeTemp = Get-ChildItem -Force  c:\Windows\*.$ExcludeFiles -Recurse -ErrorAction SilentlyContinue | measure Length -sum
-$SizeWithoutTemp = $FolderSizeWin.sum - $FileSizeTemp.sum
+$FolderSizeWin = Get-ChildItem -Force  C:\windows\ -Recurse -ErrorAction SilentlyContinue | Measure-Object Length -sum
+$ExcludeSizeFiles = Get-ChildItem -Force  C:\windows\*.$ExcludeFiles -Recurse -ErrorAction SilentlyContinue | Measure-Object Length -sum
+$FolderSizeWin.sum - $ExcludeSizeFiles.sum
 
