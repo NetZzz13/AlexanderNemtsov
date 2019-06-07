@@ -1,0 +1,32 @@
+#Создайте сценарии *.ps1 для задач из labwork 2, проверьте их работоспостобность. Каждый сценарий должен иметь параметры.
+#Сохранить в текстовый файл на диске список запущенных(!) служб. Просмотреть содержимое диска. Вывести содержимое файла в консоль PS.
+
+[CmdletBinding()]
+Param (
+    [parameter(Mandatory=$true, HelpMessage="Enter FileName")]
+      [string]$FileName
+)
+Get-Service | Where Status -eq "Running" > c:\$FileName.txt
+Get-ChildItem -Path c:\
+Get-Content c:\$FileName.txt
+
+#Просуммировать все числовые значения переменных среды Windows. (Параметры не нужны)
+#Вывести список из 10 процессов занимающих дольше всего процессор. Результат записывать в файл.
+#Организовать запуск скрипта каждые 10 минут (сделал через планировщик)
+[CmdletBinding()]
+Param (
+    [parameter(Mandatory=$true, HelpMessage="Enter number of processes")]
+      [int]$NumberProc
+)
+Get-Process | Sort-Object CPU -desc | Select-Object -first $NumberProc | Format-Table  CPU,ProcessName > c:/TopCPU.txt
+
+#Подсчитать размер занимаемый файлами в папке (например C:\windows) за исключением файлов с заданным расширением(например .tmp)
+[CmdletBinding()]
+Param (
+    [parameter(Mandatory=$true, HelpMessage="What files to exclude?")]
+      [string]$ExcludeFiles
+)
+$FolderSizeWin = Get-ChildItem -Force  c:\Windows\ -Recurse -ErrorAction SilentlyContinue | measure Length -sum
+$FileSizeTemp = Get-ChildItem -Force  c:\Windows\*.$ExcludeFiles -Recurse -ErrorAction SilentlyContinue | measure Length -sum
+$SizeWithoutTemp = $FolderSizeWin.sum - $FileSizeTemp.sum
+
