@@ -34,8 +34,8 @@ Write-host -f red $_.ProcessName $_.WS}`
 else{ write-host -f green $_.ProcessName $_.WS}}
 
 #Подсчитать размер занимаемый файлами в папке C:\windows (и во всех подпапках) за исключением файлов *.tmp
-$FolderSizeWin = Get-ChildItem -Force  c:\Windows\ -Recurse -ErrorAction SilentlyContinue | measure Length -sum
-$FileSizeTemp = Get-ChildItem -Force  c:\Windows\*.tmp -Recurse -ErrorAction SilentlyContinue | measure Length -sum
+$FolderSizeWin = Get-ChildItem -Force  c:\Windows\ -Recurse -ErrorAction SilentlyContinue | Measure-Object Length -sum
+$FileSizeTemp = Get-ChildItem -Force  c:\Windows\*.tmp -Recurse -ErrorAction SilentlyContinue | Measure-Object Length -sum
 $FolderSizeWin.sum - $FileSizeTemp.sum
 
 #Сохранить в CSV-файле информацию о записях одной ветви реестра HKLM:\SOFTWARE\Microsoft.
