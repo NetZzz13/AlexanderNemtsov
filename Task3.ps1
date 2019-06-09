@@ -58,3 +58,22 @@ Get-ChildItem -Recurse $Registry | Export-Clixml $PathToDirectory/registry.xml
 Get-Content C:\run2.txt | Write-Host -ForegroundColor $Color1
 Get-Content c:\TopCPU.txt | Write-Host -ForegroundColor $Color2
 
+#Работа с профилем
+#Создать профиль
+#В профиле изненить цвета в консоли PowerShell
+#Создать несколько собственный алиасов
+#Создать несколько констант
+#Изменить текущую папку
+#Вывести приветствие
+#Проверить применение профиля
+New-Item -ItemType file -Path $profile -force
+notepad $profile
+
+(Get-Host).UI.RawUI.ForegroundColor = "red"
+Set-Alias HelpMe Get-Help
+Set-Variable test -option Constant -value 100 
+Set-Location C:\
+Write-Host "Hello, Nemtsow"
+
+#Получить список всех доступных модулей
+Get-Module
