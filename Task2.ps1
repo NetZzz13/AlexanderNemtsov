@@ -19,7 +19,7 @@ Get-ChildItem -Path x:\
 Get-Content x:\runservices.txt
 
 #Просуммировать все числовые значения переменных текущего сеанса.
-#Ещё не сделал
+Get-Variable | where {$_.Value -is [int]} | measure Value -sum
 
 #Вывести список из 6 процессов занимающих дольше всего процессор.
 Get-Process | Sort-Object CPU -desc | Select-Object -first 6 | Format-Table  CPU,ProcessName
