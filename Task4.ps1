@@ -2,6 +2,7 @@
 Get-WmiObject -List
 
 # Получить список всех пространств имён классов WMI. 
+Get-WMIObject -namespace "root" -class "__Namespace" | Select Name
 
 # Получить список классов работы с принтером.
 Get-WmiObject *printer* -List
@@ -42,4 +43,6 @@ Write-Host "Ping time: $time ms"
 Get-WmiObject -Class Win32_Product | Select-Object -Property Name, Version | Format-Table
 
 # Выводить сообщение при каждом запуске приложения MS Word.
-
+# Ещё не придумал как связать событие именно с MS Word
+register-wmiEvent -query "select * from __instancecreationevent within 5 where targetinstance isa 'Win32_Process' and`
+ targetinstance.name ='notepad.exe'" -sourceIdentifier "ProcessStarted" -Action { Write-Host "This app has been running" } 
