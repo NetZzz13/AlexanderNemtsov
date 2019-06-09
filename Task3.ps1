@@ -10,7 +10,14 @@ Get-Service | Where Status -eq "Running" > c:\$FileName.txt
 Get-ChildItem -Path c:\
 Get-Content c:\$FileName.txt
 
-#Просуммировать все числовые значения переменных среды Windows. (Параметры не нужны) - пока не сделал
+#Просуммировать все числовые значения переменных среды Windows. (Параметры не нужны)
+[CmdletBinding()]
+Param (
+    [parameter(Mandatory=$false, HelpMessage="What files to exclude?")]
+      [string]$ExcludeFiles
+)
+Get-Variable | where {$_.Value -is [int]} | measure Value -sum
+
 #Вывести список из 10 процессов занимающих дольше всего процессор. Результат записывать в файл.
 #Организовать запуск скрипта каждые 10 минут (сделал через планировщик)
 [CmdletBinding()]
