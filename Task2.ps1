@@ -46,8 +46,8 @@ Get-History | Export-Clixml -Path c:\pshistory.xml
 
 #Загрузить данные из полученного в п.10 xml-файла и вывести в виде списка информацию о каждой записи, в виде 5 любых (выбранных Вами) свойств.
 #Ещё не сделал
-[xml]$XmlDocument = Get-Content c:\pshistory.xml
-$XmlDocument
+Get-Content c:\pshistory.xml
+Import-Clixml -Path C:\pshistory.xml
 
 #Удалить созданный диск и папку С:\M2T2_ФАМИЛИЯ
 Remove-PSDrive x
