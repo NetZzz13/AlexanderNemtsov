@@ -18,10 +18,3 @@ Enter-PSSession -ComputerName VM1 -Credential (Get-Credential)
 
 #Для одной из виртуальных машин установить для прослушивания порт 42658. Проверить работоспособность PS Remoting.
 #Создать конфигурацию сессии с целью ограничения использования всех команд, кроме просмотра содержимого дисков.
-
-
-
-
-#Необходимо разрешить удаленное управление. Для этого переходим в раздел Computer Policies\Administrative Templates\Windows Components\Windows Remote Management (Win RM)\WinRM Service и находим там параметр с названием «Allow remote server management through WinRM».
-#Затем идем в раздел Computer Configuration\Policies\Windows Components\Windows Remote Shell, находим пункт с именем «Allow Remote Shell Access»
-
