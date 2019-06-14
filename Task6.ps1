@@ -59,7 +59,6 @@ New-SmbShare –Name NetworkFolder –Path 'D:\KMPlayer\'
 Remove-SmbShare –Name NetworkFolder
 
 #Скрипт входными параметрами которого являются Маска подсети и два ip-адреса. Результат  – сообщение (ответ) в одной ли подсети эти адреса.
-
 [CmdletBinding()]
 Param (
     [parameter(Mandatory=$true, HelpMessage="Enter Mask")]
@@ -71,22 +70,18 @@ Param (
 )
 ($ipaddress1.address -band$mask.address) -eq ($ipaddress2.address -band$mask.address)
 
-#написал функцию преобразования маски, но пока не разобрался как связать со скриптом
-function Convert-IpAddressToMaskLength([string] $dottedIpAddressString)
-{
-  $result = 0; 
-  [ipaddress] $ip = $dottedIpAddressString;
-  $octets = $ip.IPAddressToString.Split('.');
-  foreach($octet in $octets)
-  {
-    while(0 -ne $octet) 
-    {
-      $octet = ($octet -shl 1) -band [byte]::MaxValue
-      $result++; 
-    }
-  }
-  return $result;
-}
+#написал функцию преобразования маски из CIDR, но пока не разобрался как связать со скриптом
+ function ConvertTo-IPv4MaskString {
+   param(
+     [Parameter(Mandatory = $true)]
+     [ValidateRange(0, 32)]
+     [Int] $MaskBits
+   )
+   $maskk = ([Math]::Pow(2, $MaskBits) - 1) * [Math]::Pow(2, (32 - $MaskBits))
+   $bytes = [BitConverter]::GetBytes([UInt32] $maskk)
+   (($bytes.Count - 1)..0 | ForEach-Object { [String] $bytes[$_] }) -join "."
+ }
+
 
 #Работа с Hyper-V
 #Получить список коммандлетов работы с Hyper-V (Module Hyper-V)
