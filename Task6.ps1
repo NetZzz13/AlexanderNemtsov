@@ -60,6 +60,17 @@ Remove-SmbShare –Name NetworkFolder
 
 #Скрипт входными параметрами которого являются Маска подсети и два ip-адреса. Результат  – сообщение (ответ) в одной ли подсети эти адреса.
 
+[CmdletBinding()]
+Param (
+    [parameter(Mandatory=$true, HelpMessage="Enter Mask")]
+    [Net.IPAddress]$Mask,
+    [parameter(Mandatory=$true, HelpMessage="Enter first ip-address")]
+    [Net.IPAddress]$Ipaddress1,
+    [parameter(Mandatory=$true, HelpMessage="Enter second ip-address")]
+    [Net.IPAddress]$Ipaddress2
+)
+($ipaddress1.address -band$mask.address) -eq ($ipaddress2.address -band$mask.address)
+
 #Работа с Hyper-V
 #Получить список коммандлетов работы с Hyper-V (Module Hyper-V)
 Get-Command -Module Hyper-V
